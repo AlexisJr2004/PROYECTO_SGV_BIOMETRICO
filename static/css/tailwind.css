@@ -1,0 +1,20 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url('../fonts/Quicksand-Regular.ttf') format('woff2');   
+}
+
+@font-face {
+    font-family: 'Pacifico';
+    src: url('../fonts/Pacifico-Regular.ttf') format('woff2');
+}
+
+@font-face {
+    font-family: 'Tiny5';
+    src: url('../fonts/Tiny5-Regular.ttf') format('woff2');
+}

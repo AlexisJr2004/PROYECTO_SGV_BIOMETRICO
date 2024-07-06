@@ -1,0 +1,37 @@
+{% extends 'components/base.html' %}
+{% load static %}
+<title>{% block title %} {{ title1 }} {% endblock title %}</title>
+{% block content %}
+<!-- SECCION DE MENU Y MODULOS -->
+<section class="dark:bg-principal py-20">
+    <div class="container mx-auto p-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="flex flex-col items-center justify-center">
+            <span class="bg-navbar rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">
+                Módulos
+            </span>
+        </div>
+        <h1 class="dark:text-white text-4xl text-center mt-8 font-Pacifico">
+            {{title2}}
+        </h1>
+        <p class="dark:text-gray-400 text-center mt-4 text-2xl font-light">
+            Bienvenido, <span class="dark:text-blue-300 text-center font-Pacifico"> {{user.username}}</span>.
+        </p>
+        {% for menu_wrapper in menu_list %}
+        <div class="mt-8 dark:bg-secundario rounded-2xl w-full flex items-center border-b-2 border-blue-300 hover:border-green-300 py-6 opacity-90">
+            <i class="{{menu_wrapper.menu.icon}} text-3xl text-green-500 mr-4"></i>
+            <h3 class="dark:text-blue-300 font-bold text-lg"><a class="dark:hover:text-green-400" href="">Menú {{menu_wrapper.menu.name}}</span></a></h3>
+        </div>
+        <div class="dark:bg-principal grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4 p-4 rounded-3xl" data-aos="fade-up" data-aos-delay="300">
+            {% for group_modulo_permission in menu_wrapper.group_module_permission_list %}
+            <div class="characteristics-card bg-white dark:bg-secundario dark:border-none transition duration-500 hover:bg-gradient-to-r hover:from-purple-200 dark:hover:bg-gradient-to-r dark:hover:from-black dark:hover:to-purple-500 p-4 rounded-lg shadow-md">
+                <i class="{{group_modulo_permission.module.icon}} text-3xl text-purple-500 mb-2"></i>
+                <h3 class="dark:text-gray-400 font-bold text-lg"><a href="{{group_modulo_permission.module.url}}">{{group_modulo_permission.module.name}}</a></h3>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<!-- CIERRE DE SECCION DE MENU Y MODULOS -->
+
+{% endblock content %}
