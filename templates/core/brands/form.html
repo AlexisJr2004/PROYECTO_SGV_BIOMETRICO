@@ -1,5 +1,6 @@
 {% extends 'components/base.html' %}
 {% block content %}
+{% load i18n %}	<!-- Escencial para poder traducir la paguina -->
 {% load static %}
 <title>{% block title %} {{ title }} {% endblock title %}</title>
 <section class="dark:bg-principal mt-20">
@@ -15,15 +16,15 @@
                 <div class="bg-white dark:bg-secundario rounded-3xl flex flex-col justify-center items-center p-8"
                     data-aos="fade-right" data-aos-delay="200">
                     <div class="w-[60%] text-center">
-                        <h2 class="dark:text-blue-300 text-2xl text-center mt-6 font-Pacifico">Imagen de Marca
+                        <h2 class="dark:text-blue-300 text-2xl text-center mt-6 font-Pacifico">{% trans 'Imagen de Marca' %}
                         </h2><br>
                         <div id="imagenPreview">
                             {% if form.image.value %}
                             <img id="imagenSeleccionada" src="{{ form.image.value.url }}"
-                                class="mx-auto d-block rounded-lg" alt="Imagen de Marca">
+                                class="mx-auto d-block rounded-lg" alt="{% trans 'Imagen de Marca' %}">
                             {% else %}
                             <img id="imagenSeleccionada" src="{% static 'img/models/default_brand.jpg' %}"
-                                class="mx-auto d-block rounded-lg" alt="Imagen de Marca por defecto">
+                                class="mx-auto d-block rounded-lg" alt="{% trans 'Imagen de Marca por defecto' %}">
                             {% endif %}
                         </div>
                     </div>
@@ -50,11 +51,11 @@
                     <div class="flex flex-col md:flex-row justify-center">
                         <button type="submit"
                             class="bg-blue-700 hover:bg-blue-800 text-white py-2 px-4 rounded-full mr-0 md:mr-2 mb-2 md:mb-0 flex items-center">
-                            <i class="fa-solid fa-save mr-2"></i>Guardar
+                            <i class="fa-solid fa-save mr-2"></i>{% trans 'Guardar' %}
                         </button>
                         <a class="bg-red-700 hover:bg-red-800 text-white py-2 px-4 rounded-full flex items-center"
                             href="{% url 'core:brand_list' %}">
-                            <i class="fa-solid fa-xmark mr-2"></i>Cancelar
+                            <i class="fa-solid fa-xmark mr-2"></i>{% trans 'Cancelar' %}
                         </a>
                     </div>
                 </div>

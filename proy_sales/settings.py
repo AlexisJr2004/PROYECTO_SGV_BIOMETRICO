@@ -118,6 +118,7 @@ INTERNAL_IPS = ["127.0.0.1",]
 NPM_BIN_PATH = r'C:\Program Files\nodejs\npm.cmd'
 
 MIDDLEWARE = [
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -129,6 +130,16 @@ MIDDLEWARE = [
     'livereload.middleware.LiveReloadScript',
 ]
 
+LANGUAGES = [
+    ('en', 'English'),
+    ('es', 'Spanish'),
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+
+LANGUAGE_CODE = 'en'  # Idioma predeterminado
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Usar base de datos para sesiones
 SESSION_COOKIE_NAME = 'sessionid'

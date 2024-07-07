@@ -22,7 +22,6 @@ User = get_user_model()
 
 class ProfileView(PermissionMixin, TemplateView):
     template_name = 'components/profile.html'
-    permission_required = 'view_profile' 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

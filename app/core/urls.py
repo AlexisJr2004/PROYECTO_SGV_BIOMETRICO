@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.urls import path
+from django.urls import path, include
 from app.core.views import supplier, company, brand, line, category, iva, product, product_price, product_price_detail, payment_method
 from app.core.views.profile_view import ProfileView, UpdateProfileView
 from app.core.views.generate_qr import QRCodeGeneratorView, GenerateLoginQRView, QRScannerView
@@ -7,6 +7,8 @@ from app.core.views.scaner_face import FacialRecognitionView
 from app.core.views.recuperation_email import PasswordResetView
 
 from django.conf.urls.static import static
+
+from django.conf.urls.i18n import i18n_patterns
 
 app_name='core' # define un espacio de nombre para la aplicación
 urlpatterns = [    
@@ -71,6 +73,10 @@ urlpatterns = [
     path('facial-recognition/', FacialRecognitionView.as_view(), name='facial_recognition'),
     # URLs Recuperara Contraseña
     path('recover-password/', PasswordResetView.as_view(), name='password_reset'),
+    # URLs Traduccion
+    path('i18n/', include('django.conf.urls.i18n')),
+
+
 
 ]
 

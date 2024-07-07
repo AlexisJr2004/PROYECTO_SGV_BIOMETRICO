@@ -3,65 +3,73 @@
 <title>{% block title %} {{ title1 }} {% endblock title %}</title>
 {% block content %}
 <section>
+    {% load i18n %}	<!-- Escencial para poder traducir la paguina -->
+
     <!---SECCION DEL MODAL DEL INICIO DE LOS USUARIOS-->
     {% if not user.is_authenticated %}
     <div id="modal-home" class="fixed inset-0 flex items-center justify-center z-50 bg-cover bg-center bg-no-repeat">
         <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
-        <div
-            class="bg-primary dark:bg-principal bg-white mx-4 my-4 p-4 sm:mx-8 sm:my-8 sm:p-6 md:mx-10 md:my-10 md:p-8 lg:mx-12 lg:my-12 lg:p-10 xl:mx-16 xl:my-16 xl:p-12 rounded-2xl z-10 max-w-7xl w-full">
+        <div class="bg-primary dark:bg-principal bg-white mx-4 my-4 p-4 sm:mx-8 sm:my-8 sm:p-6 md:mx-10 md:my-10 md:p-8 lg:mx-12 lg:my-12 lg:p-10 xl:mx-16 xl:my-16 xl:p-12 rounded-2xl z-10 max-w-7xl w-full">
             <div class="bg-primary dark:bg-principal text-center P-10">
-                <h2 class="text-4xl md:text-3xl text-blue-700 dark:text-blue-300 uppercase font-black my-2">PERFILES
+                <h2 class="text-4xl md:text-3xl text-blue-700 dark:text-blue-300 uppercase font-black my-2">
+                    {% trans 'PERFILES' %}
                 </h2>
-                <p class="text-secondary text-gray500 dark:text-gray-400">Selecciona tu perfil para iniciar sesión:</p>
+                <p class="text-secondary text-gray500 dark:text-gray-400">
+                    {% trans 'Selecciona tu perfil para iniciar sesión:' %}
+                </p>
                 <a href="/" class="flex flex-col text-center items-center m-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                    <img src="{% static 'img/iguana_corporation.png' %}" class="w-14" alt="Iguanas Corp." />
-                    <h2 class="text-4xl md:text-3xl text-blue-700 dark:text-blue-300 my-2 font-Pacifico">Iguanas
-                        Corporation
+                    <img src="{% static 'img/iguana_corporation.png' %}" class="w-14" alt="{% trans 'Iguanas Corp.' %}" />
+                    <h2 class="text-4xl md:text-3xl text-blue-700 dark:text-blue-300 my-2 font-Pacifico">
+                        {% trans 'Iguanas Corporation' %}
                     </h2>
                 </a>
-                <p class="text-secondary text-gray500 dark:text-gray-400">Accede a funcionalidades específicas.</p><br>
+                <p class="text-secondary text-gray500 dark:text-gray-400">
+                    {% trans 'Accede a funcionalidades específicas.' %}
+                </p><br>
                 <div class="grid gap-6 sm:gap-8 md:gap-10 lg:grid-cols-3 rounded-3xl">
-                    <div
-                        class="bg-slate-100 dark:bg-secundario rounded-3xl p-6 md:p-8 custom-transform flex flex-col justify-between">
+                    <div class="bg-slate-100 dark:bg-secundario rounded-3xl p-6 md:p-8 custom-transform flex flex-col justify-between">
                         <div class="flex-grow">
                             <i class="fas fa-user text-3xl md:text-4xl text-indigo-500 mb-4"></i>
                             <h2 class="text-2xl text-indigo-500 uppercase font-black font-Tiny5 my-2">
-                                Cliente</h2>
-                            <p class="text-secondary text-gray500 dark:text-gray-400">Da gestión de seguimiento a tus
-                                compras y ventas.
+                                {% trans 'Cliente' %}
+                            </h2>
+                            <p class="text-secondary text-gray500 dark:text-gray-400">
+                                {% trans 'Da gestión de seguimiento a tus compras y ventas.' %}
                             </p>
                         </div>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-medium text-center text-white rounded-lg bg-indigo-500  hover:bg-indigo-800  focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'security:auth_login' %}" id="btnCliente">Ingresar</a>
+                                href="{% url 'security:auth_login' %}" id="btnCliente">{% trans 'Ingresar' %}</a>
                         </div>
                     </div>
-                    <div
-                        class="bg-slate-100 dark:bg-secundario rounded-3xl p-6 md:p-8 custom-transform flex flex-col justify-between">
+                    <div class="bg-slate-100 dark:bg-secundario rounded-3xl p-6 md:p-8 custom-transform flex flex-col justify-between">
                         <div class="flex-grow">
                             <i class="fas fa-user-tie text-3xl md:text-4xl text-orange-500 mb-4"></i>
                             <h2 class="text-2xl text-orange-500 uppercase font-black font-Tiny5 my-2">
-                                Administrador</h2>
-                            <p class="text-secondary text-gray500 dark:text-gray-400">Gestiona las categorías, marcas y proveedores de tus productos.</p>
+                                {% trans 'Administrador' %}
+                            </h2>
+                            <p class="text-secondary text-gray500 dark:text-gray-400">
+                                {% trans 'Gestiona las categorías, marcas y proveedores de tus productos.' %}
+                            </p>
                         </div>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-medium text-center text-white rounded-lg bg-orange-500 hover:bg-orange-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'security:auth_login' %}" id="btnAdministrador">Ingresar</a>
+                                href="{% url 'security:auth_login' %}" id="btnAdministrador">{% trans 'Ingresar' %}</a>
                         </div>
                     </div>
-                    <div
-                        class="bg-slate-100 dark:bg-secundario rounded-3xl p-6 md:p-8 custom-transform flex flex-col justify-between">
+                    <div class="bg-slate-100 dark:bg-secundario rounded-3xl p-6 md:p-8 custom-transform flex flex-col justify-between">
                         <div class="flex-grow">
                             <i class="fas fa-user-secret text-3xl md:text-4xl text-green-500 mb-4"></i>
                             <h2 class="text-2xl text-green-500 uppercase font-black font-Tiny5 my-2">
-                                Invitado</h2>
-                            <p class="text-secondary text-gray500 dark:text-gray-400">Revisa las diversas funciones de
-                                nuestro sistema.
+                                {% trans 'Invitado' %}
+                            </h2>
+                            <p class="text-secondary text-gray500 dark:text-gray-400">
+                                {% trans 'Revisa las diversas funciones de nuestro sistema.' %}
                             </p>
                         </div>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-medium text-center text-white rounded-lg bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'home' %}" id="btnModoInvitado">Ingresar</a>
+                                href="{% url 'home' %}" id="btnModoInvitado">{% trans 'Ingresar' %}</a>
                         </div>
                     </div>
                 </div>
@@ -75,84 +83,70 @@
     <section id="hero-section"
         class="bg-slate-100 dark:bg-principal pt-16 hero-background bg-cover bg-center bg-no-repeat">
         <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12"
-            data-aos="fade-right" data-aos-delay="200">
-            <div class="mr-auto place-self-center lg:col-span-7 p-2">
-                <h1
-                    class="max-w-2xl mb-4 text-4xl font-Pacifico tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
-                    Una solución para tu negocio.<br>
-                    {% if user.is_authenticated %}
+        data-aos="fade-right" data-aos-delay="200">
+        <div class="mr-auto place-self-center lg:col-span-7 p-2">
+            <h1 class="max-w-2xl mb-4 text-4xl font-Pacifico tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
+                {% trans "Una solución para tu negocio." %}<br>
+                {% if user.is_authenticated %}
                     {% if user.is_superuser %}
-                    <span
-                        class="text-secondary text-blue-700 dark:text-blue-300 text-3xl font-Tiny5 font-bold">Bienvenido,
-                        {{ user.username }}.</span>
+                        <span class="text-secondary text-blue-700 dark:text-blue-300 text-3xl font-Tiny5 font-bold">{% trans 'Bienvenido,' %} {{ user.username }}.</span>
                     {% else %}
-                    <span
-                        class="text-secondary text-blue-700 dark:text-blue-300 text-3xl font-Tiny5 font-bold">Bienvenido,
-                        {{ user.username }}.</span>
+                        <span class="text-secondary text-blue-700 dark:text-blue-300 text-3xl font-Tiny5 font-bold">{% trans 'Bienvenido,' %} {{ user.username }}.</span>
                     {% endif %}
-                    {% else %}
-                    <span
-                        class="text-secondary text-blue-700 dark:text-blue-300 text-3xl font-Tiny5 font-bold">Bienvenido,
-                        usuario anónimo.</span>
-                    {% endif %}
-                </h1>
-                <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                    ¡Explora nuestro increíble sistema!<br>Te invitamos a descubrir un mundo de múltiples posibilidades
-                    y beneficios, con el objetivo de optimizar tu emprendimiento al siguiente nivel.
-                </p>
-                <a href="#herramientas"
-                    class="bg-navbar inline-flex items-center justify-center px-5 py-3 mr-3 text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
-                    Explorar
-                    <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </a>
-                <a href="#contact"
-                    class="bg-gray-200 dark:bg-secundario dark:border-gray-700 inline-flex items-center justify-center px-5 py-3 text-center border border-gray-300 rounded-lg hover:bg-gray-400 focus:ring-4 focus:ring-gray-100 dark:hover:bg-gray-700 dark:text-gray-400 dark:focus:ring-black">
-                    Contáctanos
-                </a>
-            </div>
-            <!-- Carrusel de imágenes a la derecha -->
-            <div class="hidden lg:flex lg:col-span-4 justify-center items-center lg:order-2" data-aos="fade-right">
-                <div class="rounded-3xl overflow-hidden custom-transform w-full max-w-2xl">
-                    <div id="carousel" class="relative overflow-hidden">
-                        <div id="carousel-inner" class="flex">
-                            <!-- Las imágenes se agregarán aquí dinámicamente -->
-                        </div>
+                {% else %}
+                    <span class="text-secondary text-blue-700 dark:text-blue-300 text-3xl font-Tiny5 font-bold">{% trans 'Bienvenido, usuario anónimo.' %}</span>
+                {% endif %}
+            </h1>
+            <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+                {% trans "¡Explora nuestro increíble sistema!" %}<br>{% trans "Te invitamos a descubrir un mundo de múltiples posibilidades y beneficios, con el objetivo de optimizar tu emprendimiento al siguiente nivel." %}
+            </p>
+            <a href="#herramientas"
+                class="bg-navbar inline-flex items-center justify-center px-5 py-3 mr-3 text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                {% trans "Explorar" %}
+                <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </a>
+            <a href="#contact"
+                class="bg-gray-200 dark:bg-secundario dark:border-gray-700 inline-flex items-center justify-center px-5 py-3 text-center border border-gray-300 rounded-lg hover:bg-gray-400 focus:ring-4 focus:ring-gray-100 dark:hover:bg-gray-700 dark:text-gray-400 dark:focus:ring-black">
+                {% trans "Contáctanos" %}
+            </a>
+        </div>
+        <!-- Carrusel de imágenes a la derecha -->
+        <div class="hidden lg:flex lg:col-span-4 justify-center items-center lg:order-2" data-aos="fade-right">
+            <div class="rounded-3xl overflow-hidden custom-transform w-full max-w-2xl">
+                <div id="carousel" class="relative overflow-hidden">
+                    <div id="carousel-inner" class="flex">
+                        <!-- Las imágenes se agregarán aquí dinámicamente -->
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    
+
 
         <!-- Busqueda -->
-        <div class="flex flex-col items-center relative isolate overflow-hidden px-6 py-20 text-center sm:px-16"
-            data-aos="fade-up" data-aos-delay="200">
+        <div class="flex flex-col items-center relative isolate overflow-hidden px-6 py-20 text-center sm:px-16" data-aos="fade-up" data-aos-delay="200">
             <p class="mx-auto max-w-2xl text-4xl dark:text-white text-center font-Pacifico">
-                ¿No encontró el componente que estaba buscando?
+                {% trans '¿No encontró el componente que estaba buscando?' %}
             </p>
             <form action="/">
-                <label
-                    class="mx-auto mt-8 relative min-w-sm max-w-2xl flex flex-col md:flex-row items-center justify-center border border-gray-300 py-2 px-2 rounded-2xl gap-2 shadow-2xl focus-within:border-gray-300 dark:border-gray-700"
-                    for="search-bar">
-                    <input id="search-bar" placeholder="Tu palabra clave aquí" name="q"
-                        class="dark:bg-black px-6 py-2 w-full rounded-md flex-1 outline-none font-Tiny5" required=" ">
-                    <button type="submit"
-                        class="bg-navbar bg-blue-700 w-full md:w-auto px-6 py-3 text-white rounded-xl transition-all active:scale-95 duration-100">
+                <label class="mx-auto mt-8 relative min-w-sm max-w-2xl flex flex-col md:flex-row items-center justify-center border border-gray-300 py-2 px-2 rounded-2xl gap-2 shadow-2xl focus-within:border-gray-300 dark:border-gray-700" for="search-bar">
+                    <input id="search-bar" placeholder="{% trans 'Tu palabra clave aquí' %}" name="q" class="dark:bg-black px-6 py-2 w-full rounded-md flex-1 outline-none font-Tiny5" required=" ">
+                    <button type="submit" class="bg-navbar bg-blue-700 w-full md:w-auto px-6 py-3 text-white rounded-xl transition-all active:scale-95 duration-100">
                         <span class="text-sm font-black whitespace-nowrap truncate mx-auto">
-                            Buscar
+                            {% trans 'Buscar' %}
                         </span>
                     </button>
                 </label>
             </form>
 
-            <svg viewBox="0 0 1024 1024"
-                class="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] pointer-events-none"
-                aria-hidden="true">
-                <circle cx="512" cy="512" r="512" fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)" fill-opacity="0.7">
-                </circle>
+            <svg viewBox="0 0 1024 1024" class="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] pointer-events-none" aria-hidden="true">
+                <circle cx="512" cy="512" r="512" fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)" fill-opacity="0.7"></circle>
                 <defs>
                     <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
                         <stop stop-color="#3b82f6"></stop>
@@ -162,27 +156,28 @@
             </svg>
         </div>
     </section>
+
     <!-- CIERRE DE LA SECCIÓN DEL HERO -->
- 
-    
+
+
     <!-- SECCIÓN DE MODULOS -->
     {% if user.is_superuser %}
     <section class="bg-primary dark:bg-principal bg-slate-100" id="herramientas">
         <div class="p-8" data-aos="fade-up" data-aos-delay="300">
             <div class="flex flex-col items-center justify-center">
                 <span class="bg-navbar rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">
-                    Módulos
+                    {% trans 'Módulos' %}
                 </span>
             </div>
             <h1 class="text-secondary dark:text-white text-4xl  text-center mt-6 font-Pacifico">
-                Módulos Disponibles
+                {% trans 'Módulos Disponibles' %}
             </h1>
             <p class="text-secondary  dark:text-gray-400 text-center mt-6 text-lg font-light">
-                Como administrador, puedes gestionar los módulos de tu sistema.
+                {% trans 'Como administrador, puedes gestionar los módulos de tu sistema.' %}
             </p>
             <div>
                 <h2 class="text-secondary dark:text-white text-3xl  text-center mt-6 font-Pacifico">
-                    - Ventas
+                    - {% trans 'Ventas' %}
                 </h2>
                 <div class="m-2 sm:mx-40 sm:my-2 grid gap-8 lg:mx-20 lg:p-4 rounded-3xl justify-center"
                     data-aos="fade-up" data-aos-delay="300">
@@ -190,200 +185,184 @@
                         class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fa-solid fa-coins text-4xl text-green-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-green-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Ventas
+                            {% trans 'Ventas' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'sale:invoice_create' %}" id="btnAdministrador">Empezar</a>
+                            href="{% url 'sale:invoice_create' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div>
-                <h2 class="text-secondary dark:text-white text-3xl  text-center mt-6 font-Pacifico">
-                    - Seguridad
+                <h2 class="text-secondary dark:text-white text-3xl text-center mt-6 font-Pacifico">
+                    - {% trans 'Seguridad' %}
                 </h2>
                 <div class="m-2 sm:mx-40 sm:my-2 lg:grid lg:grid-cols-4 gap-8 lg:mx-20 lg:p-4 rounded-3xl justify-center"
-                    data-aos="fade-up" data-aos-delay="300">
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+                     data-aos="fade-up" data-aos-delay="300">
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fa-solid fa-bars text-4xl text-red-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-red-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Menú
+                            {% trans 'Menú' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'security:menu_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'security:menu_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fa-solid fa-toolbox text-4xl text-blue-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-blue-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Módulos
+                            {% trans 'Módulos' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'security:module_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'security:module_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-    
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+            
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="ri-hand-coin-fill text-4xl text-green-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-green-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Grupo Módulos Permisos
+                            {% trans 'Grupo Módulos Permisos' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'security:group_module_permission_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'security:group_module_permission_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-    
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+            
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fa-solid fa-users text-4xl text-yellow-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-yellow-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Usuarios
+                            {% trans 'Usuarios' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'security:user_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'security:user_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
                 </div>
             </div>
             
+            
             <div>
-                <h2 class="text-secondary dark:text-white text-3xl  text-center mt-6 font-Pacifico">
-                    - Mantenimiento
+                <h2 class="text-secondary dark:text-white text-3xl text-center mt-6 font-Pacifico">
+                    - {% trans 'Mantenimiento' %}
                 </h2>
                 <div class="m-2 sm:mx-40 sm:my-2 lg:grid lg:grid-cols-4 gap-8 lg:mx-20 lg:p-4 rounded-3xl justify-center"
-                    data-aos="fade-up" data-aos-delay="300">
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+                     data-aos="fade-up" data-aos-delay="300">
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="ri-building-fill text-4xl text-red-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-red-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Empresas
+                            {% trans 'Empresas' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'core:company_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'core:company_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+            
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fa-solid fa-copyright text-4xl text-blue-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-blue-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Marcas
+                            {% trans 'Marcas' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'core:brand_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'core:brand_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+            
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fas fa-people-carry-box text-4xl text-green-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-green-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Proveedores
+                            {% trans 'Proveedores' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'core:supplier_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'core:supplier_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+            
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fa-solid fa-tags text-4xl text-yellow-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-yellow-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Líneas
+                            {% trans 'Líneas' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'core:line_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'core:line_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+            
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="ri-book-shelf-fill text-4xl text-purple-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-purple-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Categorías
+                            {% trans 'Categorías' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-purple-500 hover:bg-purple-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'core:category_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'core:category_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+            
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fa-solid fa-percent text-4xl text-pink-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-pink-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            IVA
+                            {% trans 'IVA' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-pink-500 hover:bg-pink-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'core:iva_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'core:iva_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+            
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fa-solid fa-box text-4xl text-indigo-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-indigo-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Productos
+                            {% trans 'Productos' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'core:product_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'core:product_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+            
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fa-solid fa-sack-dollar text-4xl text-teal-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-teal-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Precio de Productos
+                            {% trans 'Precio de Productos' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-teal-500 hover:bg-teal-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'core:product_price_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'core:product_price_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+            
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fa-solid fa-circle-info text-4xl text-orange-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-orange-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Detalle de Precio de Productos
+                            {% trans 'Detalle de Precio de Productos' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-orange-500 hover:bg-orange-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'core:product_price_detail_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'core:product_price_detail_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-
-                    <div
-                        class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
+            
+                    <div class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                         <i class="fa-solid fa-credit-card text-4xl text-cyan-500 mb-4"></i>
                         <h2 class="uppercase mt-6 text-cyan-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                            Método de Pago 
+                            {% trans 'Método de Pago' %}
                         </h2>
                         <div class="text-center mt-4">
                             <a class="inline-flex items-center justify-center px-5 py-3 mr-3 font-Pacifico text-center text-white rounded-lg bg-cyan-500 hover:bg-cyan-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                href="{% url 'core:payment_method_list' %}" id="btnAdministrador">Empezar</a>
+                               href="{% url 'core:payment_method_list' %}" id="btnAdministrador">{% trans 'Empezar' %}</a>
                         </div>
                     </div>
-
-                    
                 </div>
-            </div>
-            
+            </div>            
         </div>
     </section>
     {% endif %}
@@ -395,14 +374,14 @@
         <div id="herramientas" class="p-8" data-aos="fade-up" data-aos-delay="300">
             <div class="flex flex-col items-center justify-center">
                 <span class="bg-navbar rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">
-                    HERRAMIENTAS
+                    {% trans 'HERRAMIENTAS' %}
                 </span>
             </div>
-            <h1 class="dark:text-white text-4xl  text-center mt-6 font-Pacifico">
-                Impulsa tu Negocio
+            <h1 class="dark:text-white text-4xl text-center mt-6 font-Pacifico">
+                {% trans 'Impulsa tu Negocio' %}
             </h1>
             <p class="dark:text-gray-400 text-center mt-6 text-lg font-light">
-                Nuestro sistema ofrece las herramientas necesarias para maximizar el potencial de tu negocio.
+                {% trans 'Nuestro sistema ofrece las herramientas necesarias para maximizar el potencial de tu negocio.' %}
             </p>
 
             <div class="m-8 sm:mx-40 sm:my-2 lg:grid lg:grid-cols-3 gap-8 lg:mx-20 lg:p-4 rounded-3xl justify-center"
@@ -411,10 +390,10 @@
                     class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                     <i class="fas fa-chart-line text-4xl text-indigo-500 mb-4"></i>
                     <h2 class="uppercase mt-6 text-indigo-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                        Optimizar tus operaciones
+                        {% trans 'Optimizar tus operaciones' %}
                     </h2>
                     <p class="font-light text-gray-500 dark:text-gray-400 mb-3">
-                        Aumenta la eficiencia de tu equipo con herramientas automatizadas y análisis detallados.
+                        {% trans 'Aumenta la eficiencia de tu equipo con herramientas automatizadas y análisis detallados.' %}
                     </p>
                 </div>
 
@@ -422,10 +401,10 @@
                     class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                     <i class="fas fa-cogs text-4xl text-green-500 mb-4"></i>
                     <h2 class="uppercase mt-6 text-green-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                        Aumentar tus ventas
+                        {% trans 'Aumentar tus ventas' %}
                     </h2>
                     <p class="font-light text-gray-500 dark:text-gray-400 mb-3">
-                        Realiza ventas identificando nuevas oportunidades de negocio y cerrando más acuerdos.
+                        {% trans 'Realiza ventas identificando nuevas oportunidades de negocio y cerrando más acuerdos.' %}
                     </p>
                 </div>
 
@@ -433,11 +412,10 @@
                     class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                     <i class="fas fa-balance-scale text-4xl text-red-500 mb-4"></i>
                     <h2 class="uppercase mt-6 text-red-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                        Gestionar tus finanzas
+                        {% trans 'Gestionar tus finanzas' %}
                     </h2>
                     <p class="font-light text-gray-500 dark:text-gray-400 mb-3">
-                        Administra tus finanzas de manera eficiente y toma decisiones informadas con análisis
-                        financieros detallados sobre los productos.
+                        {% trans 'Administra tus finanzas de manera eficiente y toma decisiones informadas con análisis financieros detallados sobre los productos.' %}
                     </p>
                 </div>
 
@@ -445,10 +423,10 @@
                     class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                     <i class="fas fa-users text-4xl text-orange-500 mb-4"></i>
                     <h2 class="uppercase mt-6 text-orange-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                        Satisfacción al cliente
+                        {% trans 'Satisfacción al cliente' %}
                     </h2>
                     <p class="font-light text-gray-500 dark:text-gray-400 mb-3">
-                        El cliente recibe un servicio personalizado y una atención excepcional.
+                        {% trans 'El cliente recibe un servicio personalizado y una atención excepcional.' %}
                     </p>
                 </div>
 
@@ -456,10 +434,10 @@
                     class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                     <i class="fas fa-tools text-4xl text-blue-500 mb-4"></i>
                     <h2 class="uppercase mt-6 text-blue-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                        Mantenimiento y reparaciones
+                        {% trans 'Mantenimiento y reparaciones' %}
                     </h2>
                     <p class="font-light text-gray-500 dark:text-gray-400 mb-3">
-                        Ofrecemos servicios de mantenimiento y reparación del Software.
+                        {% trans 'Ofrecemos servicios de mantenimiento y reparación del Software.' %}
                     </p>
                 </div>
 
@@ -467,11 +445,10 @@
                     class="information-card mb-4 p-4 bg-white dark:bg-secundario dark:border-none rounded-lg shadow-md transition duration-300 ease-in-out">
                     <i class="fas fa-users text-4xl text-yellow-500 mb-4"></i>
                     <h2 class="uppercase mt-6 text-yellow-500 font-extrabold mb-3 font-Tiny5 text-xl">
-                        Capacitación de personal
+                        {% trans 'Capacitación de personal' %}
                     </h2>
                     <p class="font-light text-gray-500 dark:text-gray-400 mb-3">
-                        Brindamos programas de capacitación personalizados para mejorar las habilidades y el rendimiento
-                        del personal.
+                        {% trans 'Brindamos programas de capacitación personalizados para mejorar las habilidades y el rendimiento del personal.' %}
                     </p>
                 </div>
             </div>
@@ -484,14 +461,14 @@
         <div class="p-8" data-aos="fade-up" data-aos-delay="300">
             <div class="flex flex-col items-center justify-center">
                 <span class="bg-navbar rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">
-                    Características
+                    {% trans 'Características' %}
                 </span>
             </div>
             <h1 class="dark:text-white text-4xl text-center mt-6 font-Pacifico">
-                Características del Software
+                {% trans 'Características del Software' %}
             </h1>
             <p class="dark:text-gray-400 text-center mt-6 text-lg font-light">
-                Te ofrecemos múltiples beneficios.
+                {% trans 'Te ofrecemos múltiples beneficios.' %}
             </p>
             <div class="dark:bg-principal grid sm:grid-cols-2 lg:grid-cols-4 gap-8 m-4 lg:mx-4 lg:p-4 rounded-3xl"
                 data-aos="fade-up" data-aos-delay="300">
@@ -499,54 +476,49 @@
                 <div
                     class="characteristics-card bg-white dark:bg-secundario dark:border-none transition duration-500 hover:bg-gradient-to-r hover:from-green-200 dark:hover:bg-gradient-to-r dark:hover:from-black dark:hover:to-green-500">
                     <i class="fas fa-users text-3xl text-green-500"></i>
-                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">Dar seguimiento de proveedores</a></h3>
+                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">{% trans 'Dar seguimiento de proveedores' %}</a></h3>
                 </div>
                 <!-- Card 2 -->
                 <div
                     class="characteristics-card bg-white dark:bg-secundario dark:border-none transition duration-500 hover:bg-gradient-to-r hover:from-purple-200 dark:hover:bg-gradient-to-r dark:hover:from-black dark:hover:to-purple-500">
                     <i class="fas fa-tv text-3xl text-purple-500"></i>
-                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">Interfaz
-                            Minimalista</a></h3>
+                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">{% trans 'Interfaz Minimalista' %}</a></h3>
                 </div>
                 <!-- Card 3 -->
                 <div
                     class="characteristics-card bg-white dark:bg-secundario dark:border-none transition duration-500 hover:bg-gradient-to-r hover:from-yellow-200 dark:hover:bg-gradient-to-r dark:hover:from-black dark:hover:to-yellow-500">
                     <i class="fas fa-clock text-3xl text-yellow-500"></i>
-                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">Disponibilidad
-                            24/7</a></h3>
+                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">{% trans 'Disponibilidad 24/7' %}</a></h3>
                 </div>
                 <!-- Card 4 -->
                 <div
                     class="characteristics-card bg-white dark:bg-secundario dark:border-none transition duration-500 hover:bg-gradient-to-r hover:from-blue-200 dark:hover:bg-gradient-to-r dark:hover:from-black dark:hover:to-blue-500">
                     <i class="fas fa-shopping-cart text-3xl text-blue-500"></i>
-                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">Gestiona tus Ventas y Compras</a></h3>
+                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">{% trans 'Gestiona tus Ventas y Compras' %}</a></h3>
                 </div>
                 <!-- Card 5 -->
                 <div
                     class="characteristics-card bg-white dark:bg-secundario dark:border-none transition duration-500 hover:bg-gradient-to-r hover:from-red-200 dark:hover:bg-gradient-to-r dark:hover:from-black dark:hover:to-red-500">
                     <i class="fas fa-check-circle text-3xl text-red-500"></i>
-                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">Servicios Garantizados</a></h3>
+                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">{% trans 'Servicios Garantizados' %}</a></h3>
                 </div>
                 <!-- Card 6 -->
                 <div
                     class="characteristics-card bg-white dark:bg-secundario dark:border-none transition duration-500 hover:bg-gradient-to-r hover:from-teal-200 dark:hover:bg-gradient-to-r dark:hover:from-black dark:hover:to-teal-500">
                     <i class="fas fa-shield-alt text-3xl text-teal-500"></i>
-                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">Aplicación Segura</a>
-                    </h3>
+                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">{% trans 'Aplicación Segura' %}</a></h3>
                 </div>
                 <!-- Card 7 -->
                 <div
                     class="characteristics-card bg-white dark:bg-secundario dark:border-none transition duration-500 hover:bg-gradient-to-r hover:from-pink-200 dark:hover:bg-gradient-to-r dark:hover:from-black dark:hover:to-pink-500">
                     <i class="fas fa-users text-3xl text-pink-500"></i>
-                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">Contacto con los
-                            administradores</a></h3>
+                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">{% trans 'Contacto con los administradores' %}</a></h3>
                 </div>
                 <!-- Card 8 -->
                 <div
                     class="characteristics-card bg-white dark:bg-secundario dark:border-none transition duration-500 hover:bg-gradient-to-r hover:from-indigo-200 dark:hover:bg-gradient-to-r dark:hover:from-black dark:hover:to-indigo-500">
                     <i class="fas fa-moon text-3xl text-indigo-500"></i>
-                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">Implementación del
-                            modo oscuro</a></h3>
+                    <h3 class="dark:text-gray-400 font-bold characteristics-card-title"><a href="">{% trans 'Implementación del modo oscuro' %}</a></h3>
                 </div>
             </div>
         </div>
@@ -558,14 +530,14 @@
         <div class="p-8 gap-20" data-aos="fade-up" data-aos-delay="300">
             <div class="flex felx-col items-center justify-center">
                 <span class="bg-navbar rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">
-                    PRECIOS
+                    {% trans 'PRECIOS' %}
                 </span>
             </div>
             <h1 class="text-secondary dark:text-white text-4xl text-center mt-6 font-Pacifico">
-                Paga una vez, úsalo para siempre
+                {% trans 'Paga una vez, úsalo para siempre' %}
             </h1>
             <p class="text-secondary dark:text-gray-400 text-center mt-6 text-lg font-light">
-                Conoce nuestros planes.
+                {% trans 'Conoce nuestros planes.' %}
             </p>
             <div class="p-4 sm:px-10 flex flex-col justify-center items-center h-100vh mx-auto" data-aos="fade-right"
                 data-aos-delay="300" id="pricing">
@@ -573,17 +545,16 @@
                 <div class="isolate mx-auto grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                     <div class="ring-1 ring-gray-200 rounded-3xl p-8 xl:p-10">
                         <div class="flex items-center justify-between gap-x-4">
-                            <h3 id="tier-standard" class="text-gray-500/70  text-2xl font-semibold leading-8">Standard
-                            </h3>
+                            <h3 id="tier-standard" class="text-gray-500/70  text-2xl font-semibold leading-8">{% trans 'Standard' %}</h3>
                         </div>
-                        <p class="mt-4 leading-6 text-gray-600">1 license for only 1 activation</p>
+                        <p class="mt-4 leading-6 text-gray-600">{% trans '1 license for only 1 activation' %}</p>
                         <p class="mt-6 flex items-baseline gap-x-1">
                             <span class="line-through text-2xl text-gray-500/70">$39</span><span
                                 class="text-5xl font-bold tracking-tight dark:text-gray-300 text-black">$29</span>
                         </p>
                         <a href="" aria-describedby="tier-standard"
                             class="text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300 mt-6 block rounded-md py-2 px-3 text-center font-extrabold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                            target="_blank">Buy now</a>
+                            target="_blank">{% trans 'Buy now' %}</a>
                         <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10">
                             <li class="flex gap-x-3 text-base">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -591,7 +562,7 @@
                                     class="h-6 w-5 flex-none text-blue-600">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>Lifetime access
+                                </svg>{% trans 'Lifetime access' %}
                             </li>
                             <li class="flex gap-x-3 text-base">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -599,7 +570,7 @@
                                     class="h-6 w-5 flex-none text-blue-600">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>All AI features
+                                </svg>{% trans 'All AI features' %}
                             </li>
                             <li class="flex gap-x-3 text-base">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -607,25 +578,25 @@
                                     class="h-6 w-5 flex-none text-blue-600">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>Use your own OpenAI key
+                                </svg>{% trans 'Use your own OpenAI key' %}
                             </li>
                         </ul>
                     </div>
                     <div class="ring-2 ring-blue-600 rounded-3xl p-8 xl:p-10">
                         <div class="flex items-center justify-between gap-x-4">
-                            <h3 id="tier-extended" class="text-blue-600 text-2xl font-semibold leading-8">Extended</h3>
+                            <h3 id="tier-extended" class="text-blue-600 text-2xl font-semibold leading-8">{% trans 'Extended' %}</h3>
                             <p
                                 class="rounded-full bg-blue-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-blue-600">
-                                Most popular</p>
+                                {% trans 'Most popular' %}</p>
                         </div>
-                        <p class="mt-4 leading-6 text-gray-600">1 license for up to 3 activations</p>
+                        <p class="mt-4 leading-6 text-gray-600">{% trans '1 license for up to 3 activations' %}</p>
                         <p class="mt-6 flex items-baseline gap-x-1">
                             <span class="line-through text-2xl text-gray-500/70">$59</span><span
                                 class="text-5xl font-bold tracking-tight dark:text-gray-300 text-black">$39</span>
                         </p>
                         <a href="" aria-describedby="tier-extended"
                             class="bg-blue-600 text-white shadow-sm hover:bg-blue-500 mt-6 block rounded-md py-2 px-3 text-center font-medium leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                            target="_blank">Buy now</a>
+                            target="_blank">{% trans 'Buy now' %}</a>
                         <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10">
                             <li class="flex gap-x-3 text-base">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -633,7 +604,7 @@
                                     class="h-6 w-5 flex-none text-blue-600">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>Lifetime access
+                                </svg>{% trans 'Lifetime access' %}
                             </li>
                             <li class="flex gap-x-3 text-base">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -641,7 +612,7 @@
                                     class="h-6 w-5 flex-none text-blue-600">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>All AI features
+                                </svg>{% trans 'All AI features' %}
                             </li>
                             <li class="flex gap-x-3 text-base">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -649,7 +620,7 @@
                                     class="h-6 w-5 flex-none text-blue-600">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>Use your own OpenAI key
+                                </svg>{% trans 'Use your own OpenAI key' %}
                             </li>
                         </ul>
                     </div>
@@ -664,13 +635,15 @@
     <div class="dark:bg-principal p-8 gap-20">
         <div class="p-8 gap-20" data-aos="fade-up" data-aos-delay="300">
             <div class="flex flex-col items-center justify-center">
-                <span class="bg-navbar rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">EQUIPO</span>
+                <span class="bg-navbar rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">
+                    {% trans 'EQUIPO' %}
+                </span>
             </div>
             <h1 class="dark:text-white text-4xl text-center mt-6 font-Pacifico">
-                Equipo de trabajo
+                {% trans 'Equipo de trabajo' %}
             </h1>
             <p class="dark:text-gray-400 text-center mt-6 text-lg font-light">
-                Conozca nuestro equipo de desarrollo.
+                {% trans 'Conozca nuestro equipo de desarrollo.' %}
             </p>
             <div class="flex flex-col lg:flex-row gap-4 items-center justify-center">
                 <section class="py-4" data-aos="fade-up" data-aos-delay="300" custom-transform>
@@ -683,11 +656,11 @@
                         <div class="p-6 text-center">
                             <h4
                                 class="text-secondary dark:text-blue-300 block mb-2 text-2xl antialiased leading-snug tracking-normal text-blue-700 font-Pacifico">
-                                Steven Alexander Nieto Duran
+                                {% trans 'Steven Alexander Nieto Duran' %}
                             </h4>
                             <p
                                 class="dark:text-gray-400 block antialiased font-medium leading-relaxed bg-clip-text bg-gradient-to-tr from-blue-gray-600 to-blue-gray-400">
-                                Jefe de Proyecto - Programador
+                                {% trans 'Jefe de Proyecto - Programador' %}
                             </p>
                         </div>
                         <div class="flex justify-center p-6 pt-2 gap-7">
@@ -709,11 +682,11 @@
                         <div class="p-6 text-center">
                             <h4
                                 class="text-secondary dark:text-blue-300 block mb-2 text-2xl antialiased leading-snug tracking-normal text-blue-700 font-Pacifico">
-                                Javier Omar Haro Soledispa
+                                {% trans 'Javier Omar Haro Soledispa' %}
                             </h4>
                             <p
                                 class="dark:text-gray-400 block antialiased font-medium leading-relaxed bg-clip-text bg-gradient-to-tr from-blue-gray-600 to-blue-gray-400">
-                                Jefe de Proyecto - Programador
+                                {% trans 'Jefe de Proyecto - Programador' %}
                             </p>
                         </div>
                         <div class="flex justify-center p-6 pt-2 gap-7">
@@ -729,25 +702,25 @@
     </div>
     <!-- CIERRE DE LA SECCION DE EQUIPO DE DESARROLLO -->
 
-    <!-- SECCIÓN DE TECNOLOGIAS USADAS -->
-    <section class="bg-primary dark:bg-principal bg-slate-100">
-        <div id="herramientas" class="p-8" data-aos="fade-up" data-aos-delay="300">
-            <div class="flex flex-col items-center justify-center">
-                <span class="bg-navbar rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">
-                    Tecnologías
-                </span>
-            </div>
-            <h1 class="text-secondary dark:text-white text-4xl text-center mt-6 font-Pacifico">
-                Tecnologías Usadas
-            </h1>
-            <p class="text-secondary dark:text-gray-400 text-center mt-6 text-lg font-light">
-                Se utilizaron las siguientes tecnologías para el desarrollo de nuestro sistema:
-            </p>
-            <div
-                class="my-4 w-full px-96 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 dark:bg-secundario dark:border-secundario">
-                <h5 class="mb-3 text-4xl font-black font-Tiny5 dark:text-blue-300 text-center">
-                    ¡Gracias!
-                </h5>
+<!-- SECCIÓN DE TECNOLOGIAS USADAS -->
+<section class="bg-primary dark:bg-principal bg-slate-100">
+    <div id="herramientas" class="p-8" data-aos="fade-up" data-aos-delay="300">
+        <div class="flex flex-col items-center justify-center">
+            <span class="bg-navbar rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">
+                {% trans 'Tecnologías' %}
+            </span>
+        </div>
+        <h1 class="text-secondary dark:text-white text-4xl text-center mt-6 font-Pacifico">
+            {% trans 'Tecnologías Usadas' %}
+        </h1>
+        <p class="text-secondary dark:text-gray-400 text-center mt-6 text-lg font-light">
+            {% trans 'Se utilizaron las siguientes tecnologías para el desarrollo de nuestro sistema:' %}
+        </p>
+        <div
+            class="my-4 w-full px-96 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 dark:bg-secundario dark:border-secundario">
+            <h5 class="mb-3 text-4xl font-black font-Tiny5 dark:text-blue-300 text-center">
+                {% trans '¡Gracias!' %}
+            </h5>
                 <ul class="my-4 grid grid-cols-2 md:grid-cols-4 gap-10">
                     <li>
                         <a href="#"
@@ -778,17 +751,13 @@
                     </li>
                     <li>
                         <a href="#"
-                            class="flex items-center p-3 font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-[#0b1121] dark:hover:bg-[#121c33] dark:text-white">
+                           class="flex items-center p-3 font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-[#0b1121] dark:hover:bg-[#121c33] dark:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 32 32">
-                                <path
-                                    d="M14.135 4H18.1v18.169a26.218 26.218 0 0 1-5.143.535c-4.842-.005-7.362-2.168-7.362-6.322 0-4 2.673-6.6 6.816-6.6a6.448 6.448 0 0 1 1.724.2V4Zm0 9.142a3.992 3.992 0 0 0-1.337-.2c-2 0-3.163 1.223-3.163 3.366 0 2.087 1.107 3.239 3.138 3.239a9.355 9.355 0 0 0 1.362-.1v-6.3Z"
-                                    style="fill:#44b78b" />
-                                <path
-                                    d="M24.4 10.059v9.1c0 3.133-.235 4.639-.923 5.938A6.316 6.316 0 0 1 20.237 28l-3.678-1.733a5.708 5.708 0 0 0 3.141-2.629c.566-1.121.745-2.42.745-5.837v-7.742ZM20.441 4.02h3.964v4.028h-3.964z"
-                                    style="fill:#44b78b" /><svg>
-                                    <span class="flex-1 ms-3 whitespace-nowrap">Django</span>
-                                    <span
-                                        class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">Popular</span>
+                                <path d="M14.135 4H18.1v18.169a26.218 26.218 0 0 1-5.143.535c-4.842-.005-7.362-2.168-7.362-6.322 0-4 2.673-6.6 6.816-6.6a6.448 6.448 0 0 1 1.724.2V4Zm0 9.142a3.992 3.992 0 0 0-1.337-.2c-2 0-3.163 1.223-3.163 3.366 0 2.087 1.107 3.239 3.138 3.239a9.355 9.355 0 0 0 1.362-.1v-6.3Z" style="fill:#44b78b" />
+                                <path d="M24.4 10.059v9.1c0 3.133-.235 4.639-.923 5.938A6.316 6.316 0 0 1 20.237 28l-3.678-1.733a5.708 5.708 0 0 0 3.141-2.629c.566-1.121.745-2.42.745-5.837v-7.742ZM20.441 4.02h3.964v4.028h-3.964z" style="fill:#44b78b" />
+                            </svg>
+                            <span class="flex-1 ms-3 whitespace-nowrap">Django</span>
+                            <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">Popular</span>
                         </a>
                     </li>
                     <li>
@@ -807,17 +776,17 @@
                     </li>
                     <li>
                         <a href="#"
-                            class="flex items-center p-3 font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-[#0b1121] dark:hover:bg-[#121c33] dark:text-white">
-                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg width=" 30"
-                                height="30" class="dark:text-white fill-current">
-                                <title>GitHub</title>
-                                <path
-                                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                            </svg>
-                            <span class="flex-1 ms-3 whitespace-nowrap">GitHub</span>
-                            <span
-                                class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">Popular</span>
-                        </a>
+                        class="flex items-center p-3 font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-[#0b1121] dark:hover:bg-[#121c33] dark:text-white">
+                         <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                              class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 dark:text-white fill-current">
+                             <title>GitHub</title>
+                             <path
+                                 d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                         </svg>
+                         <span class="flex-1 ms-3 whitespace-nowrap">GitHub</span>
+                         <span
+                             class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">Popular</span>
+                     </a>
                     </li>
                     <li>
                         <a href="#"
@@ -1029,39 +998,35 @@
         <div class="p-8" data-aos="fade-up" data-aos-delay="300">
             <div class="gap-2">
                 <div class="flex flex-col items-center justify-center">
-                    <span
-                        class="bg-navbar rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">CONTACTOS</span>
+                    <span class="bg-navbar rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">
+                        {% trans 'CONTACTOS' %}
+                    </span>
                 </div>
-
+    
                 <h1 class="dark:text-white text-4xl text-center mt-6 font-Pacifico">
-                    Contácta a nuestro equipo
+                    {% trans 'Contácta a nuestro equipo' %}
                 </h1>
                 <p class="dark:text-gray-400 text-center mt-6 text-lg font-light">
-                    Envíanos tus sugerencias.
+                    {% trans 'Envíanos tus sugerencias.' %}
                 </p>
             </div>
             <div class="flex flex-col lg:flex-row gap-4 items-center justify-center">
                 <section class="py-2 lg:my-6 lg:mx-auto lg:max-w-5xl lg:py-20" data-aos="fade-up" data-aos-delay="300">
                     <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-6 mb-4">
                         <div class="dark:bg-secundario bg-white p-8 shadow-lg rounded-lg">
-                            <h1 class="dark:text-white text-2xl font-Pacifico text-center my-2">Un mensaje de quienes
-                                conformamos...</h1>
+                            <h1 class="dark:text-white text-2xl font-Pacifico text-center my-2">
+                                {% trans 'Un mensaje de quienes conformamos...' %}
+                            </h1>
                             <ul class="mb-6 md:mb-0 space-y-6">
                                 <li class="flex flex-col items-center">
                                     <div>
-                                        <h3
-                                            class="text-blue-500 dark:text-blue-300 text-2xl font-Tiny5 uppercase mb-4 text-center">
-                                            Iguanas Corporation</h3>
+                                        <h3 class="text-blue-500 dark:text-blue-300 text-2xl font-Tiny5 uppercase mb-4 text-center">
+                                            {% trans 'Iguanas Corporation' %}
+                                        </h3>
                                         <a class="dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-300"
                                             href="https://www.google.com/maps/place/UNEMI+-+Universidad+Estatal+de+Milagro/@-2.149223,-79.60552,17z/data=!3m1!4b1!4m6!3m5!1s0x902d465523c50e37:0x70a5136e6272715f!8m2!3d-2.149223!4d-79.6029451!16s%2Fg%2F1tt1j8j4?entry=ttu"
                                             target="_blank">
-                                            "En nuestro corazón late el deseo ferviente de ser parte de tu éxito.
-                                            Queremos ser el
-                                            impulso que eleva tus sueños, la chispa que enciende tu visión.
-                                            Confía en nosotros para ser tus aliados en esta travesía hacia el triunfo.
-                                            Juntos, llevaremos tu negocio más allá de lo imaginable. Tu éxito es nuestro
-                                            mayor
-                                            logro."
+                                            {% trans '"En nuestro corazón late el deseo ferviente de ser parte de tu éxito. Queremos ser el impulso que eleva tus sueños, la chispa que enciende tu visión. Confía en nosotros para ser tus aliados en esta travesía hacia el triunfo. Juntos, llevaremos tu negocio más allá de lo imaginable. Tu éxito es nuestro mayor logro."' %}
                                         </a>
                                     </div>
                                     <div class="my-2 text-2xl space-x-4">
@@ -1074,34 +1039,23 @@
                                         <a href="#"
                                             class="text-blue-700 hover:text-blue-900 dark:text-blue-500 dark:hover:text-blue-700 fab fa-linkedin"></a>
                                     </div>
-                                    {% comment %} <!-- Pedro Pedro Seccion -->
-                                    <div class="my-4">
-                                        <div class="spinner">
-                                            <a href="https://links.codetheworld.io/" target="_blank"><img
-                                                    class="pedro-pedro animate-bounce-custom"
-                                                    src="//codetheworld.io/wp-content/uploads/2024/05/pedro.png"></a>
-                                        </div>
-                                    </div> {% endcomment %}
                                 </li>
                             </ul>
-                        </div>
-                        <div class="dark:bg-secundario bg-white p-8 shadow-lg rounded-lg">
-                            <h1 class="dark:text-white text-2xl font-Pacifico text-center my-2">¡Te estaremos esperando!
-                            </h1>
+                        </div><div class="dark:bg-secundario bg-white p-8 shadow-lg rounded-lg">
+                            <h1 class="dark:text-white text-2xl font-Pacifico text-center my-2">{% trans '¡Te estaremos esperando!' %}</h1>
                             <ul class="mb-6 md:mb-0 space-y-6">
                                 <li class="flex">
                                     <div>
                                         <h3 class="text-blue-500 dark:text-blue-300 text-2xl font-Tiny5 uppercase mb-4">
-                                            <i class="ri-map-pin-fill text-green-500"></i> Dirección
+                                            <i class="ri-map-pin-fill text-green-500"></i> {% trans 'Dirección' %}
                                         </h3>
                                         <a class="dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-300"
                                             href="https://www.google.com/maps/place/UNEMI+-+Universidad+Estatal+de+Milagro/@-2.149223,-79.60552,17z/data=!3m1!4b1!4m6!3m5!1s0x902d465523c50e37:0x70a5136e6272715f!8m2!3d-2.149223!4d-79.6029451!16s%2Fg%2F1tt1j8j4?entry=ttu"
                                             target="_blank">
-                                            Universidad Estatal de Milagro (UNEMI) <br>
-                                            Ecuador, Guayas, Milagro <br>
-                                            Av. 17 de Septiembre
-                                        </a>
-                                        <div class="overflow-hidden rounded-lg mt-4 h-96 lg:h-auto">
+                                            {% trans 'Universidad Estatal de Milagro (UNEMI)' %} <br>
+                                            {% trans 'Ecuador, Guayas, Milagro' %} <br>
+                                            {% trans 'Av. 17 de Septiembre' %}
+                                        </a>          <div class="overflow-hidden rounded-lg mt-4 h-96 lg:h-auto">
                                             <iframe
                                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.0116737716644!2d-79.60552002596603!3d-2.1492176371761693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902d465523c50e37%3A0x70a5136e6272715f!2sUNEMI%20-%20Universidad%20Estatal%20de%20Milagro!5e0!3m2!1sen!2sus!4v1718180036827!5m2!1sen!2sus"
                                                 class="w-full h-full border-0" allowfullscreen="" loading="lazy"
@@ -1113,8 +1067,8 @@
                                 <li class="flex">
                                     <div>
                                         <h3 class="text-blue-500 dark:text-blue-300 text-2xl font-Tiny5 uppercase mb-4">
-                                            <i class="ri-phone-fill text-green-500"></i> Contacto
-                                        </h3>
+                                            <i class="ri-phone-fill text-green-500"></i> {% trans 'Contacto' %}
+                                        </h3>                                        
                                         <div class="flex items-start space-x-4">
                                             <i class="ri-mail-send-line text-blue-500 text-2xl"></i>
                                             <div>
@@ -1140,51 +1094,51 @@
                         <div class="dark:bg-secundario bg-white p-8 rounded-3xl">
                             <form id="contact-form" action="https://formspree.io/f/myyrwqgz" method="post" role="form"
                                 class="space-y-8">
-                                <h1 class="dark:text-white text-2xl font-Pacifico text-center">Envianos un mensaje</h1>
+                                <h1 class="dark:text-white text-2xl font-Pacifico text-center">{% trans 'Envianos un mensaje' %}</h1>
                                 <div>
                                     <label for="name"
-                                        class="dark:text-blue-300 font-black uppercase text-lg">Nombre</label>
+                                        class="dark:text-blue-300 font-black uppercase text-lg">{% trans 'Nombre' %}</label>
                                     <input type="text" name="name" id="name"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-principal dark:border-none dark:placeholder-gray-400 dark:text-blue-300 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                                        placeholder="Ingresa tu nombre aquí" required>
+                                        placeholder="{% trans 'Ingresa tu nombre aquí' %}" required>
                                 </div>
                                 <div>
                                     <label for="email"
-                                        class="dark:text-blue-300 font-black uppercase text-lg">Correo</label>
+                                        class="dark:text-blue-300 font-black uppercase text-lg">{% trans 'Correo' %}</label>
                                     <input type="email" name="email" id="email"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-principal dark:border-none dark:placeholder-gray-400 dark:text-blue-300 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                                        placeholder="Ingresa tu correo aquí" required>
+                                        placeholder="{% trans 'Ingresa tu correo aquí' %}" required>
                                 </div>
                                 <div>
                                     <label for="subject"
-                                        class="dark:text-blue-300 font-black uppercase text-lg">Asunto</label>
+                                        class="dark:text-blue-300 font-black uppercase text-lg">{% trans 'Asunto' %}</label>
                                     <input type="text" name="subject" id="subject"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-principal dark:border-none dark:placeholder-gray-400 dark:text-blue-300 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                                        placeholder="Ingresa el asunto aquí" required>
+                                        placeholder="{% trans 'Ingresa el asunto aquí' %}" required>
                                 </div>
                                 <div>
                                     <label for="message"
-                                        class="dark:text-blue-300 font-black uppercase text-lg">Mensaje</label>
+                                        class="dark:text-blue-300 font-black uppercase text-lg">{% trans 'Mensaje' %}</label>
                                     <textarea name="message" id="message" rows="5"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500                                 focus:border-blue-500 block w-full p-2.5 dark:bg-principal dark:border-none dark:placeholder-gray-400 dark:text-blue-300 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                                        placeholder="Ingresa el mensaje aquí" required></textarea>
+                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-principal dark:border-none dark:placeholder-gray-400 dark:text-blue-300 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                        placeholder="{% trans 'Ingresa el mensaje aquí' %}" required></textarea>
                                 </div>
                                 <div id="success-message" class="hidden my-3 bg-green-300 p-4 rounded-3xl">
                                     <div class="text-center">
                                         <i class="fa-solid fa-envelope-circle-check"></i><br>
-                                        Su mensaje ha sido enviado.<br>
-                                        <span class="font-semibold">¡Gracias!</span>
+                                        {% trans 'Su mensaje ha sido enviado.' %}<br>
+                                        <span class="font-semibold">{% trans '¡Gracias!' %}</span>
                                     </div>
                                 </div>
                                 <div>
                                     <button type="submit"
                                         class="bg-navbar py-3 px-5 text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                                        Enviar Mensaje
+                                        {% trans 'Enviar Mensaje' %}
                                     </button>
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div>                    
                 </section>
             </div>
         </div>
@@ -1231,6 +1185,7 @@
 
 <!-- Script para el carrusel de imágenes -->
 <script>
+    // Rutas de las imágenes del carrusel
     var imagePaths = [
         "{% static 'img/home-carausel/carausel-1.png' %}",
         "{% static 'img/home-carausel/carausel-2.png' %}",
@@ -1246,15 +1201,18 @@
     var currentSlide = 0;
     var totalSlides = imagePaths.length;
 
+    // Función para mostrar una imagen específica en el carrusel
     function showSlide(index) {
         carouselInner.style.transform = `translateX(-${index * 100}%)`;
     }
 
+    // Función para mostrar la siguiente imagen en el carrusel
     function nextSlide() {
         currentSlide = (currentSlide + 1) % totalSlides;
         showSlide(currentSlide);
     }
 
+    // Función que se ejecuta cuando la ventana se ha cargado
     window.onload = function () {
         imagePaths.forEach((path) => {
             carouselInner.innerHTML += `<img src="${path}" alt="Carousel Image" class="w-full">`;
@@ -1262,6 +1220,7 @@
         setInterval(nextSlide, 5000); // Cambiar a la siguiente imagen cada 5 segundos
     };
 </script>
+
 
 <!-- Script para enviar correos -->
 <script>

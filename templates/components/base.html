@@ -47,22 +47,24 @@
 		})();
 	</script>
 
+	{% block navbar %}
 </head>
 
-<body class="dark:bg-principal text-secondary loading text-items font-Quicksand text-lg font-light">
+{% load i18n %}	<!-- Escencial para poder traducir la paguina -->
 
+<body class="dark:bg-principal text-secondary loading text-items font-Quicksand text-lg font-light">
+	
 	<!-- Div de la animacion de carga -->
 	<div id="loader" class="overlay dark:bg-black">
 		<div class="relative">
 			<div class="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
 			<div
-				class="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border border-blue-500 animate-spin">
-			</div>
+			class="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border border-blue-500 animate-spin">
 		</div>
 	</div>
+</div>
 
-	<!-- Navbar -->
-	{% block navbar %}
+<!-- Navbar -->
 	<header class="bg-navbar top-0 left-0 right-0 z-50 bg-transparent fixed w-full transition duration-300 ease-in-out">
 		<nav class="border-gray-200 dark:bg-principal">
 			<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -75,6 +77,76 @@
 					<span id="themeIconContainer" class="dark:bg-gray inline-block p-2 rounded  cursor-pointer">
 						<i id="themeIcon" class="fas fa-moon text-gray-300 dark:text-gray-500"></i>
 					</span>
+
+					<div class="flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse">
+						<form action="{% url 'core:set_language' %}" method="post" id="language-form">
+						  {% csrf_token %}
+						  <input name="next" type="hidden" value="{{ redirect_to }}">
+						  <input type="hidden" name="language" id="selected-language" value="{{ LANGUAGE_CODE|default:'en' }}">
+						  
+						  <button type="button" id="language-button" data-dropdown-toggle="language-dropdown-menu" class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+							<svg id="language-flag" class="w-5 h-5 rounded-full me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
+							</svg>
+							<span id="language-text">English</span>
+						  </button>
+						  
+						  <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700" id="language-dropdown-menu">
+							<ul class="py-2 font-medium" role="none">
+							  <li>
+								<a href="#" onclick="changeLanguage('en')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+								  <div class="inline-flex items-center">
+									<svg class="h-3.5 w-3.5 rounded-full me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" id="flag-icon-css-us" viewBox="0 0 512 512"><g fill-rule="evenodd"><g stroke-width="1pt"><path fill="#bd3d44" d="M0 0h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z" transform="scale(3.9385)"/><path fill="#fff" d="M0 10h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z" transform="scale(3.9385)"/></g><path fill="#192f5d" d="M0 0h98.8v70H0z" transform="scale(3.9385)"/><path fill="#fff" d="M8.2 3l1 2.8H12L9.7 7.5l.9 2.7-2.4-1.7L6 10.2l.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9z" transform="scale(3.9385)"/></g></svg>              
+									English (US)
+								  </div>
+								</a>
+							  </li>
+							  <li>
+								<a href="#" onclick="changeLanguage('es')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+								  <div class="inline-flex items-center">
+									<svg class="h-3.5 w-3.5 rounded-full me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" id="flag-icon-css-es" viewBox="0 0 512 512">
+									  <path fill="#ffce00" d="M0 128h512v256H0z"/>
+									  <path fill="#dd0000" d="M0 0h512v128H0zm0 384h512v128H0z"/>
+									</svg>
+									Español (ES)
+								  </div>
+								</a>
+							  </li>
+							</ul>
+						  </div>
+						</form>
+					  </div>
+					  
+					  <script>
+					  function loadSavedLanguage() {
+						const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+						changeLanguage(savedLang, false);
+					  }
+					  
+					  function changeLanguage(lang, submit = true) {
+						const flagSVG = document.getElementById('language-flag');
+						const languageText = document.getElementById('language-text');
+						
+						if (lang === 'es') {
+						  flagSVG.innerHTML = '<rect width="512" height="512" fill="#AA151B"/><rect width="512" height="170" fill="#F1BF00" y="170"/>';
+						  languageText.textContent = 'Español';
+						} else {
+						  flagSVG.innerHTML = '<path fill="#b22234" d="M0 0h512v512H0z"/><path d="M0 58.2h512M0 116.4h512M0 174.6h512M0 232.8h512M0 291h512M0 349.2h512M0 407.4h512M0 465.6h512" stroke="#fff" stroke-width="39.4"/><path fill="#3c3b6e" d="M0 0h390.4v274.8H0z"/><path d="M32.5 11.4l3.7 11.4H48l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm32.5 34.2l3.7 11.4H419l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-32.5 34.2l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm195 34.2l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm195 34.2l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-130 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm195 34.2l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm195 34.2l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-130 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8zm-65 0l3.7 11.4h11.8l-9.6 7 3.7 11.4-9.6-7-9.7 7 3.7-11.4-9.6-7h11.8z" fill="#fff"/>';
+						  languageText.textContent = 'English';
+						}
+					  
+						document.getElementById('selected-language').value = lang;
+						localStorage.setItem('selectedLanguage', lang);
+					  
+						if (submit) {
+						  document.getElementById('language-form').submit();
+						}
+					  }
+					  
+					  document.addEventListener('DOMContentLoaded', loadSavedLanguage);
+					  </script>
+					
+					
+
 
 					<div class="dark:border-gray-800 relative hidden md:block">
 						<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer text-gray-500">
@@ -119,34 +191,38 @@
 									class="block px-4 py-2 font-bold text-gray-500 truncate dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all">{{group.name}}</a>
 							</li>
 						</ul>
+
 						{% endfor %}
 						<ul class="dark:bg-secundario py-2" aria-labelledby="user-menu-button">
 							<li>
 								<a href="{% url 'core:profile' %}" onclick="closeDropdown()"
-								   class="block px-4 py-2 font-bold text-gray-500 truncate dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all">Perfil</a>
-							</li>							
-
-							<li>
-								<a class="block px-4 py-2 font-bold text-gray-500 truncate dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all cursor-pointer"
-									data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation"
-									aria-controls="drawer-navigation" onclick="closeDropdown()">
-									Temas
+								class="block px-4 py-2 font-bold text-gray-500 truncate dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all">
+									{% trans "Perfil" %}
 								</a>
 							</li>
 
 							<li>
 								<a class="block px-4 py-2 font-bold text-gray-500 truncate dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all cursor-pointer"
-									data-drawer-target="drawer-left-example" data-drawer-show="drawer-left-example"
-									data-drawer-placement="left" aria-controls="drawer-left-example"
-									onclick="closeDropdown()">
-									Autenticación Biométrica
+								data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation"
+								aria-controls="drawer-navigation" onclick="closeDropdown()">
+									{% trans "Temas" %}
+								</a>
+							</li>
+
+							<li>
+								<a class="block px-4 py-2 font-bold text-gray-500 truncate dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all cursor-pointer"
+								data-drawer-target="drawer-left-example" data-drawer-show="drawer-left-example"
+								data-drawer-placement="left" aria-controls="drawer-left-example"
+								onclick="closeDropdown()">
+									{% trans "Autenticación Biométrica" %}
 								</a>
 							</li>
 
 							<li>
 								<a href="{% url 'security:auth_logout' %}" onclick="closeDropdown()"
-									class="block px-4 py-2 font-bold text-gray-500 truncate dark:text-gray-400 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition-all">Cerrar
-									Sesión</a>
+								class="block px-4 py-2 font-bold text-gray-500 truncate dark:text-gray-400 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition-all">
+									{% trans "Cerrar Sesión" %}
+								</a>
 							</li>
 						</ul>
 						{% else %}
@@ -194,13 +270,15 @@
 						</li>
 						<li>
 							<a href="{% url 'modulos' %}"
-								class="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-gray-900 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Módulos</a>
+								class="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-gray-900 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+								{% trans "Módulos" %}
+							</a>
 						</li>
 						<li>
 							<button data-modal-target="about-modal" data-modal-toggle="about-modal"
 								class="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-gray-900 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
 								type="button">
-								Acerca de Nosotros
+								{% trans "Acerca de Nosotros" %}
 							</button>
 						</li>
 					</ul>
@@ -216,8 +294,8 @@
 			<div class="relative bg-white rounded-lg shadow dark:bg-secundario">
 				<!-- Modal header -->
 				<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-					<h3 class="text-xl font-semibold text-gray-900 dark:text-blue-300 font-Pacifico">
-						Sobre Nosotros...
+					<h3 class="text-xl text-gray-900 dark:text-blue-300 font-Pacifico">
+						{% trans "Sobre Nosotros..." %}
 					</h3>
 					<button type="button"
 						class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -258,11 +336,13 @@
 		class="fixed top-0 left-0 z-50 h-screen p-6 overflow-y-auto transition-transform -translate-x-full bg-white w-64 dark:bg-gray-800"
 		tabindex="-1" aria-labelledby="drawer-navigation-label">
 		<h5 id="drawer-navigation-label"
-			class="items-center text-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">Sección de
-			Temas</h5>
+			class="items-center text-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">
+			{% trans "Sección de Temas" %}
+		</h5>
 		<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-		<p class="mb-6 text-sm text-gray-500 dark:text-gray-400">Seleccione el tema que desea aplicar en la aplicación
-			para trabajar cómodamente.</p>
+		<p class="mb-6 text-sm text-gray-500 dark:text-gray-400">
+			{% trans "Seleccione el tema que desea aplicar en la aplicación para trabajar cómodamente." %}
+		</p>
 		<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
 		<div class="py-6 overflow-y-auto">
 			<ul class="space-y-4">
@@ -275,7 +355,7 @@
 							<div class="bg-white"></div>
 							<div class="bg-blue-200"></div>
 						</div>
-						<span class="text-sm font-medium">Light</span>
+						<span class="text-sm font-medium">{% trans "Claro" %}</span>
 					</a>
 				</li>
 				<li>
@@ -287,7 +367,7 @@
 							<div class="bg-black"></div>
 							<div class="bg-blue-200"></div>
 						</div>
-						<span class="text-sm font-medium">Dark</span>
+						<span class="text-sm font-medium">{% trans "Oscuro" %}</span>
 					</a>
 				</li>
 				<li>
@@ -299,7 +379,7 @@
 							<div class="bg-orange-300"></div>
 							<div class="bg-orange-600"></div>
 						</div>
-						<span class="text-sm font-medium">Orange</span>
+						<span class="text-sm font-medium">{% trans "Naranja" %}</span>
 					</a>
 				</li>
 				<li>
@@ -311,7 +391,7 @@
 							<div class="bg-blue-300"></div>
 							<div class="bg-blue-600"></div>
 						</div>
-						<span class="text-sm font-medium">Blue</span>
+						<span class="text-sm font-medium">{% trans "Azul" %}</span>
 					</a>
 				</li>
 			</ul>
@@ -319,17 +399,28 @@
 	</div>
 	<!-- Cierre de la columna a la izquierda con temas -->
 
+
 	<!-- Columna a la izquierda con Datos Biométricos -->
-<div id="drawer-left-example" class="fixed top-0 left-0 z-50 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-left-label">
-	<h5 id="drawer-left-label" class="items-center text-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">Autenticación Biométrica</h5>
-	<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-   <p class="mb-6 text-sm text-gray-500 dark:text-gray-400">Activa el desbloqueo Biometrico en tu aplicación, para iniciar seción con mayor facilidad.</p>
-   <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-   <div class="grid grid-cols-2 gap-4">
-	<a href="#" id="toggleFacialRecognition" onclick="DesbloqueoFacial()" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Desbloqueo Facial</a>
-	<a href="#" onclick="DesbloqueoQR()" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Desbloqueo Código QR</a>
-   </div>
-</div>
+	<div id="drawer-left-example" class="fixed top-0 left-0 z-50 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-left-label">
+		<h5 id="drawer-left-label" class="items-center text-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">
+			{% trans "Autenticación Biométrica" %}
+		</h5>
+		<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+		<p class="mb-6 text-sm text-gray-500 dark:text-gray-400">
+			{% trans "Activa el desbloqueo Biométrico en tu aplicación, para iniciar sesión con mayor facilidad." %}
+		</p>
+		<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+		<div class="grid grid-cols-2 gap-4">
+			<a href="#" id="toggleFacialRecognition" onclick="DesbloqueoFacial()" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+				{% trans "Desbloqueo Facial" %}
+			</a>
+			<a href="#" onclick="DesbloqueoQR()" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+				{% trans "Desbloqueo Código QR" %}
+			</a>
+		</div>
+	</div>
+
+
 
 <script>
 
@@ -491,26 +582,27 @@
 				</div>
 				<div class="wcs_popup_header">
 					<span class="fa fa-whatsapp"></span>
-					<strong>Servicio al cliente</strong>
+					<strong>{% trans 'Servicio al cliente' %}</strong>
 
-					<div class="wcs_popup_header_description">¿Necesidad de ayuda? Chatea con nosotros en Whatsapp</div>
+					<div class="wcs_popup_header_description">{% trans '¿Necesidad de ayuda? Chatea con nosotros en Whatsapp' %}</div>
 
 				</div>
-				<div class="wcs_popup_input" data-number="593997932650"
-					data-availability='{ "monday":"06:00-19:00", "tuesday":"06:00-19:00", "wednesday":"06:00-19:00", "thursday":"06:00-19:00", "friday":"06:00-19:00", "saturday":"06:00-19:00", "sunday":"06:00-19:00" }'>
-					<input type="text" placeholder="Escribir pregunta!" />
+
+				<div class="wcs_popup_input" data-number="593997932650" data-availability="{&quot;monday&quot;:&quot;06:00-19:00&quot;, &quot;tuesday&quot;:&quot;06:00-19:00&quot;, &quot;wednesday&quot;:&quot;06:00-19:00&quot;, &quot;thursday&quot;:&quot;06:00-19:00&quot;, &quot;friday&quot;:&quot;06:00-19:00&quot;, &quot;saturday&quot;:&quot;06:00-19:00&quot;, &quot;sunday&quot;:&quot;06:00-19:00&quot;}">
+					<input type="text" placeholder="{% trans 'Escribir pregunta!' %}" />
 					<i class="fa fa-play"></i>
 				</div>
+										
 				<div class="wcs_popup_avatar">
 					{% if user.is_authenticated %}
-					{% if user.customer and user.customer.image %}
-						<img class="w-12 h-12 rounded-full bg-slate-200 dark:bg-blue-300" src="{{ user.customer.image.url }}" alt="Profile Picture">
+						{% if user.customer and user.customer.image %}
+							<img class="w-12 h-12 rounded-full bg-slate-200 dark:bg-blue-300" src="{{ user.customer.image.url }}" alt="{% trans 'Profile Picture' %}">
+						{% else %}
+							<img class="w-12 h-12 rounded-full bg-slate-200 dark:bg-blue-300" src="{% static 'img/usuario_anonimo_2.png' %}" alt="{% trans 'Default Profile Picture' %}">
+						{% endif %}
 					{% else %}
-						<img class="w-12 h-12 rounded-full bg-slate-200 dark:bg-blue-300" src="{% static 'img/usuario_anonimo_2.png' %}" alt="Default Profile Picture">
+						<img class="w-12 h-12 rounded-full" src="{% static 'img/usuario_anonimo_2.png' %}" alt="{% trans 'Anonymous Profile Picture' %}">
 					{% endif %}
-				{% else %}
-					<img class="w-12 h-12 rounded-full" src="{% static 'img/usuario_anonimo_2.png' %}" alt="Anonymous Profile Picture">
-				{% endif %}
 				</div>
 			</div>
 		</div>
@@ -522,77 +614,129 @@
 		<div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
 			<div class="sm:flex sm:items-center sm:justify-between">
 				<a href="/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-					<img src="{% static 'img/iguana_corporation.png' %}" class="w-12 h-12 dark:bg-blue-300 dark:rounded-full" alt="Flowbite Logo" />
-					<span class="self-center whitespace-nowrap dark:text-blue-300 font-extrabold">Iguanas Corp.</span>
+					<img src="{% static 'img/iguana_corporation.png' %}" class="w-12 h-12 dark:bg-blue-300 dark:rounded-full" alt="{% trans 'Flowbite Logo' %}" />
+					<span class="self-center whitespace-nowrap dark:text-blue-300 font-extrabold">{% trans 'Iguanas Corp.' %}</span>
 				</a>
-				<ul
-					class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+				<ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
 					<li>
-						<button data-modal-target="default-modal" data-modal-toggle="default-modal"
-							class="hover:underline me-4 md:me-6" type="button">
-							Términos de Servicio
+						<button data-modal-target="default-modal" data-modal-toggle="default-modal" class="hover:underline me-4 md:me-6" type="button">
+							{% trans 'Términos de Servicio' %}
 						</button>
 					</li>
 				</ul>
 			</div>
 			<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-			<span class="block text-gray-500 sm:text-center dark:text-gray-400 font-bold">© 2023 <a href=""
-					class="hover:underline">Iguanas Corporation™</a>. Todos los derechos reservados.<br>Diseñado por <a
-					class="text-title text-blue-700 hover:underline" href="https://github.com/Alexis2024"
-					target="_blank">Alex Duran</a> y <a class="text-title text-blue-700 hover:underline"
-					href="https://github.com/JaviOHS" target="_blank">Javier Haro</a>
+			<span class="block text-gray-500 sm:text-center dark:text-gray-400 font-bold">
+				© 2023 
+				<a href="/" class="hover:underline">{% trans "Iguanas Corporation™" %}</a>.
+				{% trans "Todos los derechos reservados." %}<br>
+				{% trans "Diseñado por" %} 
+				<a class="text-title text-blue-700 hover:underline" href="https://github.com/Alexis2024" target="_blank">Alex Duran</a> 
+				{% trans "y" %} 
+				<a class="text-title text-blue-700 hover:underline" href="https://github.com/JaviOHS" target="_blank">Javier Haro</a>
 			</span>
 		</div>
 	</footer>
 	<!-- Cierre del footer -->
 
+	<!-- Modal de Cookies -->
+	<div id="cookies-with-stacked-buttons" class="fixed bottom-4 right-4 z-[60] max-w-sm w-full" data-aos="fade-left" data-aos-delay="200">
+		<div class="p-4 bg-white backdrop-blur-lg rounded-xl shadow-2xl dark:bg-neutral-900/60 dark:shadow-black/70">
+		  <div class="flex justify-between items-center gap-x-5 sm:gap-x-10">
+			<h2 class="font-semibold text-gray-800 dark:text-white">
+			  Cookie Settings
+			</h2>
+			<button id="close-cookie-modal" type="button" class="inline-flex rounded-full p-2 text-gray-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-600 dark:hover:bg-neutral-800 dark:text-neutral-300" data-hs-remove-element="#cookies-with-stacked-buttons">
+				<span class="sr-only">Dismiss</span>
+				<svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+			  </button>
+		  </div>
+		  <p class="mt-2 text-sm text-gray-800 dark:text-neutral-200">
+			We use cookies to improve your experience and for marketing. Visit our <a class="inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline font-medium dark:text-blue-500" href="#">Cookies Policy</a> to learn more.
+		  </p>
+		  <div class="mt-5 mb-2 w-full flex gap-x-2">
+			<div class="grid w-full">
+				<button id="allow-cookies" type="button" class="py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+					Allow all
+				  </button>
+			</div>
+			<div class="grid w-full">
+				<button id="reject-cookies" type="button" class="py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+					Reject all
+				  </button>				  
+			</div>
+		  </div>
+		  <div class="grid w-full">
+			<button id="manage-cookies" type="button" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
+				Manage cookies
+			  </button>
+		  </div>
+		</div>
+	  </div>
+	<!-- Fin del Modal de Cookies -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+		  const cookieModal = document.getElementById('cookies-with-stacked-buttons');
+		  const closeButtons = ['close-cookie-modal', 'allow-cookies', 'reject-cookies', 'manage-cookies'];
+		
+		  // Comprueba si el modal ya ha sido cerrado
+		  if (localStorage.getItem('cookieModalClosed') === 'true') {
+			cookieModal.style.display = 'none';
+		  }
+		
+		  // Agrega event listeners a todos los botones
+		  closeButtons.forEach(buttonId => {
+			const button = document.getElementById(buttonId);
+			if (button) {
+			  button.addEventListener('click', function() {
+				cookieModal.style.display = 'none';
+				localStorage.setItem('cookieModalClosed', 'true');
+			  });
+			}
+		  });
+		});
+		</script>
+
 	<!-- Modal de Ternino de servicio -->
-	<div id="default-modal" tabindex="-1" aria-hidden="true"
-		class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+	<div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
 		<div class="relative p-4 w-full max-w-2xl max-h-full">
 			<!-- Modal content -->
 			<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
 				<!-- Modal header -->
 				<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
 					<h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-						Terminos de Servicios
+						{% trans 'Términos de Servicio' %}
 					</h3>
-					<button type="button"
-						class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-						data-modal-hide="default-modal">
-						<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-							viewBox="0 0 14 14">
-							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-								d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+					<button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+						<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
 						</svg>
-						<span class="sr-only">Close modal</span>
+						<span class="sr-only">{% trans 'Close modal' %}</span>
 					</button>
 				</div>
 				<!-- Modal body -->
 				<div class="p-4 md:p-5 space-y-4">
 					<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-						Faltando menos de un mes para que la Unión Europea promulgue nuevas leyes de privacidad del
-						consumidor para sus ciudadanos, empresas de todo el mundo están actualizando sus acuerdos de
-						términos de servicio para cumplir.
+						{% trans "Faltando menos de un mes para que la Unión Europea promulgue nuevas leyes de privacidad del consumidor para sus ciudadanos, empresas de todo el mundo están actualizando sus acuerdos de términos de servicio para cumplir." %}
 					</p>
 					<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-						El Reglamento General de Protección de Datos de la Unión Europea (G.D.P.R.) entra en vigor el 25
-						de mayo y tiene como objetivo garantizar un conjunto común de derechos de datos en la Unión
-						Europea. Requiere que las organizaciones notifiquen a los usuarios lo antes posible sobre
-						violaciones de datos de alto riesgo que podrían afectarlos personalmente.
+						{% trans "El Reglamento General de Protección de Datos de la Unión Europea (G.D.P.R.) entra en vigor el 25 de mayo y tiene como objetivo garantizar un conjunto común de derechos de datos en la Unión Europea. Requiere que las organizaciones notifiquen a los usuarios lo antes posible sobre violaciones de datos de alto riesgo que podrían afectarlos personalmente." %}
 					</p>
 				</div>
 				<!-- Modal footer -->
 				<div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-					<button data-modal-hide="default-modal" type="button"
-						class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Aceptar</button>
-					<button data-modal-hide="default-modal" type="button"
-						class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Denegar</button>
+					<button data-modal-hide="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+						{% trans 'Aceptar' %}
+					</button>
+					<button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+						{% trans 'Denegar' %}
+					</button>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<!-- Scripts -->
+	<!-- Scripts -->
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script src="{% static 'js/sweet_alert.js' %}"></script>
 		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

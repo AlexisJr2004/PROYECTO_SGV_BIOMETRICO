@@ -1,5 +1,6 @@
 {% extends 'components/base.html' %}
 {% load static %}
+{% load i18n %}	<!-- Escencial para poder traducir la paguina -->
 {% block content %}
 <title>{% block title %} {{ title1 }} {% endblock title %}</title>
 <section class="dark:bg-principal mt-20 px-4 sm:px-6 lg:px-8">
@@ -7,14 +8,14 @@
         <div class="pt-16 sm:pt-24 lg:pt-28">
             <div class="flex flex-col items-center justify-center">
                 <span class="rounded-full bg-indigo-500 px-2 py-1 text-white uppercase text-sm">
-                    {{ title1 }}
+                    {% trans title1 %}
                 </span>
             </div>
             <h1 class="dark:text-white text-2xl sm:text-3xl lg:text-4xl text-center mt-6 font-Pacifico">
-                {{ title2 }}
+                {% trans title2 %}
             </h1>
             <p class="dark:text-gray-400 text-center mt-6 text-base sm:text-lg font-light">
-                Complete el formulario para actualizar su información.
+                {% trans "Complete el formulario para actualizar su información." %}
             </p>
         </div>
         <form method="post" enctype="multipart/form-data" class="space-y-6 py-4">
@@ -22,72 +23,94 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto max-w-7xl" data-aos="fade">
                 <!-- Columna de la izquierda -->
                 <div class="bg-white dark:bg-secundario rounded-3xl flex flex-col justify-center items-center p-4 sm:p-8"
-                data-aos="fade-right" data-aos-delay="200">
-                <div class="w-[60%] text-center">
-                    <h2 class="dark:text-blue-300 text-xl sm:text-2xl text-center mt-6 font-Pacifico">Imagen Actual</h2><br>
-                    <div id="imagenPreview">
-                        {% if user.customer.image %}
-                            <img id="imagenSeleccionada" src="{{ user.customer.image.url }}" class="mx-auto d-block rounded-lg" alt="Foto de perfil">
-                            {% if imagen_nombre %}
-                                <p>Archivo actual: {{ imagen_nombre }}</p>
+                     data-aos="fade-right" data-aos-delay="200">
+                    <div class="w-[60%] text-center">
+                        <h2 class="dark:text-blue-300 text-xl sm:text-2xl text-center mt-6 font-Pacifico">
+                            {% trans "Imagen Actual" %}
+                        </h2><br>
+                        <div id="imagenPreview">
+                            {% if user.customer.image %}
+                                <img id="imagenSeleccionada" src="{{ user.customer.image.url }}" class="mx-auto d-block rounded-lg" alt="{% trans 'Foto de perfil' %}">
+                                {% if imagen_nombre %}
+                                    <p>{% trans 'Archivo actual:' %} {{ imagen_nombre }}</p>
+                                {% endif %}
+                            {% else %}
+                                <img id="imagenSeleccionada" src="{% static 'img/usuario_anonimo_2.png' %}" class="mx-auto d-block rounded-lg" alt="{% trans 'Foto de perfil por defecto' %}">
                             {% endif %}
-                        {% else %}
-                            <img id="imagenSeleccionada" src="{% static 'img/usuario_anonimo_2.png' %}" class="mx-auto d-block rounded-lg" alt="Foto de perfil por defecto">
-                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="text-center w-full m-4">
+                        <label for="{{ form.image.id_for_label }}" class="dark:text-white font-black uppercase text-base sm:text-lg">
+                            {{ form.image.label }}
+                        </label>
+                        {{ form.image }}
                     </div>
                 </div>
-                <div class="text-center w-full m-4">
-                    <label for="{{ form.image.id_for_label }}" class="dark:text-white font-black uppercase text-base sm:text-lg">{{ form.image.label }}</label>
-                    {{ form.image }}
-                </div>                    
-            </div>
                 <!-- Columna de la derecha -->
                 <div class="p-6 rounded-3xl dark:bg-secundario bg-white flex flex-col justify-center items-center" data-aos="fade-right" data-aos-delay="200">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
                         <div class="space-y-6">
                             <div class="mb-6">
-                                <label for="{{ form.first_name.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">{{ form.first_name.label }}</label>
+                                <label for="{{ form.first_name.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                    {{ form.first_name.label }}
+                                </label>
                                 <input type="text" name="{{ form.first_name.name }}" id="{{ form.first_name.id_for_label }}" value="{{ form.first_name.value }}" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                             </div>
                             <div class="mb-6">
-                                <label for="{{ form.last_name.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">{{ form.last_name.label }}</label>
+                                <label for="{{ form.last_name.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                    {{ form.last_name.label }}
+                                </label>
                                 <input type="text" name="{{ form.last_name.name }}" id="{{ form.last_name.id_for_label }}" value="{{ form.last_name.value }}" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                             </div>
                         </div>
                         <div class="space-y-6">
                             <div class="mb-6">
-                                <label for="{{ form.dni.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">{{ form.dni.label }}</label><br>
+                                <label for="{{ form.dni.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                    {{ form.dni.label }}
+                                </label><br>
                                 <input type="text" name="{{ form.dni.name }}" id="{{ form.dni.id_for_label }}" value="{{ form.dni.value }}" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                             </div>
                             <div class="mb-6">
-                                <label for="{{ form.phone.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">{{ form.phone.label }}</label>
+                                <label for="{{ form.phone.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                    {{ form.phone.label }}
+                                </label>
                                 <input type="text" name="{{ form.phone.name }}" id="{{ form.phone.id_for_label }}" value="{{ form.phone.value }}" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                             </div>
                         </div>
                         <div>
-                            <label for="{{ form.address.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">Dirección</label>
+                            <label for="{{ form.address.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                {% trans 'Dirección' %}
+                            </label>
                             <input type="text" name="{{ form.address.name }}" id="{{ form.address.id_for_label }}" value="{{ form.address.value|default_if_none:'' }}" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                         </div>
                         <div>
-                            <label for="{{ form.gender.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">Género</label>
+                            <label for="{{ form.gender.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                {% trans 'Género' %}
+                            </label>
                             <select name="{{ form.gender.name }}" id="{{ form.gender.id_for_label }}" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
-                                <option value="">Seleccione un género</option>
-                                <option value="M" {% if form.gender.value == 'M' %}selected{% endif %}>Masculino</option>
-                                <option value="F" {% if form.gender.value == 'F' %}selected{% endif %}>Femenino</option>
-                                <option value="O" {% if form.gender.value == 'O' %}selected{% endif %}>Otro</option>
-                            </select>
+                                <option value="">{% trans 'Seleccione un género' %}</option>
+                                <option value="M" {% if form.gender.value == 'M' %}selected{% endif %}>{% trans 'Masculino' %}</option>
+                                <option value="F" {% if form.gender.value == 'F' %}selected{% endif %}>{% trans 'Femenino' %}</option>
+                                <option value="O" {% if form.gender.value == 'O' %}selected{% endif %}>{% trans 'Otro' %}</option>
+                            </select>                            
                         </div>
                         <div>
-                            <label for="{{ form.date_of_birth.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">Fecha de Nacimiento</label>
+                            <label for="{{ form.date_of_birth.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                {% trans 'Fecha de Nacimiento' %}
+                            </label>
                             <input type="date" name="{{ form.date_of_birth.name }}" id="{{ form.date_of_birth.id_for_label }}" value="{{ form.date_of_birth.value|date:'Y-m-d' }}" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label for="{{ form.latitude.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">Latitud</label>
+                                <label for="{{ form.latitude.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                    {% trans 'Latitud' %}
+                                </label>
                                 <input type="number" step="any" name="{{ form.latitude.name }}" id="{{ form.latitude.id_for_label }}" value="{{ form.latitude.value|default_if_none:'' }}" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                             </div>
                             <div>
-                                <label for="{{ form.longitude.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">Longitud</label>
+                                <label for="{{ form.longitude.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                    {% trans 'Longitud' %}
+                                </label>
                                 <input type="number" step="any" name="{{ form.longitude.name }}" id="{{ form.longitude.id_for_label }}" value="{{ form.longitude.value|default_if_none:'' }}" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                             </div>
                         </div>
@@ -95,38 +118,45 @@
                     <br>
                     <div class="w-full mb-6">
                         <div>
-                            <label for="{{ form.email.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">{{ form.email.label }}</label>
+                            <label for="{{ form.email.id_for_label }}" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                {{ form.email.label }}
+                            </label>
                             <input type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}" value="{{ form.email.value }}" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                         </div>
                     </div>
                     <!-- Actualizar Contraseña -->
                     <p class="dark:text-gray-400 text-center mt-6 text-sm sm:text-base font-light uppercase">
-                        Sección de Cambio de Contraseña
+                        {% trans 'Sección de Cambio de Contraseña' %}
                     </p>
                     <div class="w-full space-y-4">
                         <div>
-                            <label for="id_current_password" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">Contraseña Actual</label>
+                            <label for="id_current_password" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                {% trans 'Contraseña Actual' %}
+                            </label>
                             <input type="password" id="id_current_password" name="current_password" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                         </div>
                         <div>
-                            <label for="id_new_password1" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">Nueva Contraseña</label>
+                            <label for="id_new_password1" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                {% trans 'Nueva Contraseña' %}
+                            </label>
                             <input type="password" id="id_new_password1" name="new_password1" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                         </div>
                         <div>
-                            <label for="id_new_password2" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">Confirmar Nueva Contraseña</label>
+                            <label for="id_new_password2" class="dark:text-blue-300 font-bold uppercase text-sm sm:text-base">
+                                {% trans 'Confirmar Nueva Contraseña' %}
+                            </label>
                             <input type="password" id="id_new_password2" name="new_password2" class="dark:bg-gray-800 dark:text-white border-2 border-gray-300 rounded-lg py-2 px-4 w-full">
                         </div>
                     </div>
                     <div class="flex flex-col sm:flex-row justify-center w-full mt-6">
                         <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white py-2 px-4 rounded-full mr-0 sm:mr-2 mb-2 sm:mb-0 flex items-center justify-center w-full sm:w-auto">
-                            <i class="fa-solid fa-save mr-2"></i>Guardar
+                            <i class="fa-solid fa-save mr-2"></i>{% trans 'Guardar' %}
                         </button>
                         <a class="bg-red-700 hover:bg-red-800 text-white py-2 px-4 rounded-full flex items-center justify-center w-full sm:w-auto" href="{% url 'core:profile' %}">
-                            <i class="fa-solid fa-xmark mr-2"></i>Cancelar
+                            <i class="fa-solid fa-xmark mr-2"></i>{% trans 'Cancelar' %}
                         </a>
                     </div>
                 </div>
-
             </div>
         </form>
     </div>
