@@ -50,10 +50,16 @@ class MenuModule:
         # obtiene todos los modulos del grupo
         group_module_permission_list = GroupModulePermission.get_group_module_permission_active_list(group.id).order_by('module__name')
         # obtiene la lista de menus de tal forma que no se repitan debido que un menu
-        # tiene varios modulos 
-        menu_unicos= group_module_permission_list.order_by('module__menu_id').distinct(
-                'module__menu_id',
-            )
+        # tiene varios modulos
+        # Nota: no se usa .distinct('module__menu_id') porque DISTINCT ON solo
+        # lo soporta PostgreSQL; se deduplica en Python para funcionar con
+        # cualquier backend (p.ej. SQLite).
+        vistos = set()
+        menu_unicos = []
+        for gmp in group_module_permission_list.order_by('module__menu_id'):
+            if gmp.module.menu_id not in vistos:
+                vistos.add(gmp.module.menu_id)
+                menu_unicos.append(gmp)
         # obtiene cada menu con sus submenus o modulos
         menu_list = [self._get_data_menu_list(x, group_module_permission_list)
             for x in menu_unicos]
